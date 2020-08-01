@@ -19,14 +19,10 @@ if argc != 2:
     exit(1)
 
 private_key = args[0]
-
-if not private_key.startswith('0x'):
-    private_key = "0x" + private_key
-
 msg = str.encode(args[1], 'utf-8')
 
 curve = Curve.get_curve('Ed448')
 signer = EDDSA(hashlib.shake_256, hash_len=114)
-signature = signer.sign(msg, ECPrivateKey(int(private_key), curve))
+signature = signer.sign(msg, ECPrivateKey(int(private_key, 16), curve))
 
-print(binascii.hexlify(signature))
+print(signature.hex())
