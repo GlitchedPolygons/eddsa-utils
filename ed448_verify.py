@@ -18,13 +18,18 @@ if argc != 3:
     sys.stderr.flush()
     exit(1)
 
+curve = Curve.get_curve('Ed448')
+
 public_key = args[0]
 signature = binascii.unhexlify(args[1])
 msg = str.encode(args[2], 'utf-8')
 
-w = int(public_key, 16)
-curve = Curve.get_curve('Ed448')
 signer = EDDSA(hashlib.shake_256, hash_len=114)
-valid = signer.verify(msg, signature, ECPublicKey(curve.decode_point(w)))
+valid = signer.verify(msg, signature, ECPublicKey(curve.decode_point(binascii.unhexlify(public_key))))
 
-print(signature)
+if valid:
+    print('ed448_verify: Success! The signature is valid.')
+    exit(0)
+else:
+    print('ed448_verify: Failure! The signature is invalid.')
+    exit(2)
