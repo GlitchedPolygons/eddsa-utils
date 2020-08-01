@@ -1,6 +1,5 @@
 import sys
 import hashlib
-import binascii
 
 from ecpy.eddsa import EDDSA
 from ecpy.curves import Curve
