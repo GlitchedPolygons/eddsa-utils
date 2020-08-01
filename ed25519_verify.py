@@ -15,6 +15,16 @@ if argc != 3:
     sys.stderr.flush()
     exit(1)
 
+if len(args[0]) != 64:
+    sys.stderr.write('ed25519_verify: Invalid public key format/length!\n')
+    sys.stderr.flush()
+    exit(2)
+
+if len(args[1]) != 128:
+    sys.stderr.write('ed25519_verify: Invalid signature format/length!\n')
+    sys.stderr.flush()
+    exit(2)
+
 public_key = ed25519.VerifyingKey(binascii.unhexlify(args[0]))
 signature = binascii.unhexlify(args[1])
 msg = str.encode(args[2], 'utf-8')
@@ -24,4 +34,4 @@ try:
     print('ed25519_verify: Success! The signature is valid.')
 except:
     print('ed25519_verify: Failure! The signature is invalid.')
-    exit(2)
+    exit(3)

@@ -18,6 +18,16 @@ if argc != 3:
     sys.stderr.flush()
     exit(1)
 
+if len(args[0]) != 114:
+    sys.stderr.write('ed448_verify: Invalid public key format/length!\n')
+    sys.stderr.flush()
+    exit(2)
+
+if len(args[1]) != 228:
+    sys.stderr.write('ed448_verify: Invalid signature format/length!\n')
+    sys.stderr.flush()
+    exit(2)
+
 curve = Curve.get_curve('Ed448')
 
 public_key = args[0]
@@ -32,4 +42,4 @@ if valid:
     exit(0)
 else:
     print('ed448_verify: Failure! The signature is invalid.')
-    exit(2)
+    exit(3)

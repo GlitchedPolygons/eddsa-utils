@@ -17,6 +17,11 @@ if argc != 2:
     sys.stderr.flush()
     exit(1)
 
+if len(args[0]) != 114:
+    sys.stderr.write('ed448_sign: Invalid private key format/length!\n')
+    sys.stderr.flush()
+    exit(2)
+
 private_key = args[0]
 msg = str.encode(args[1], 'utf-8')
 

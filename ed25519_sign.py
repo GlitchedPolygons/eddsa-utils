@@ -14,6 +14,11 @@ if argc != 2:
     sys.stderr.flush()
     exit(1)
 
+if len(args[0]) != 64:
+    sys.stderr.write('ed25519_sign: Invalid private key format/length!\n')
+    sys.stderr.flush()
+    exit(2)
+
 private_key = ed25519.SigningKey(binascii.unhexlify(args[0]))
 msg = str.encode(args[1], 'utf-8')
 signature = private_key.sign(msg, encoding='hex')
