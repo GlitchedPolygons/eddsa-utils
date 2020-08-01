@@ -1,7 +1,10 @@
-from ecpy.curves import Curve, Point
-from ecpy.keys import ECPrivateKey, ECPublicKey
+import sys
+import hashlib
+import binascii
+
 from ecpy.eddsa import EDDSA
-import secrets, hashlib, binascii, sys
+from ecpy.curves import Curve
+from ecpy.keys import ECPrivateKey
 
 args = sys.argv[1:]
 argc = len(args)
@@ -25,4 +28,5 @@ msg = str.encode(args[1], 'utf-8')
 curve = Curve.get_curve('Ed448')
 signer = EDDSA(hashlib.shake_256, hash_len=114)
 signature = signer.sign(msg, ECPrivateKey(int(private_key), curve))
+
 print(binascii.hexlify(signature))
